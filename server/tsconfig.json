@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES6",
+    "noImplicitAny": true,
+    "outDir": "dist/",
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "baseUrl": ".",
+    "rootDir": "./src/",
+    "lib": ["es2017", "dom"]
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

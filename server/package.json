@@ -1,0 +1,26 @@
+{
+  "name": "review-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "dev:watch": "cross-env NODE_ENV=development nodemon --watch 'src/**/*' -e ts --exec 'npm run dev'",
+    "dev": "npm run build && npm run serve:dev",
+    "build": "tsc --build --clean && tsc",
+    "serve": "node dist/server.js",
+    "serve:dev": "node --inspect=0.0.0.0:9229 dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hanna.senkevich@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.49",
+    "cross-env": "^5.2.0",
+    "nodemon": "^1.19.1",
+    "typescript": "^3.6.2"
+  }
+}
