@@ -44,6 +44,7 @@ router.get('/ratings', (ctx, next) => {
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-app.listen(3000, () => {
-    console.log('Server is listening to port 3000.')
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`Server is listening to port ${port}.`)
 });
