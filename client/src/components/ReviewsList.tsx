@@ -1,14 +1,11 @@
 import React from 'react';
 import { Review } from './Review';
+import { IReview } from '../core/models/review.model';
 
-export class ReviewList extends React.Component {
-  render() {
-    const pageLength = 5;
-    const reviews = [];
-    for (let i = 0; i < pageLength; i += 1) {
-      reviews.push(<Review />);
-    }
-
-    return <div className="todo">{reviews}</div>;
-  }
-}
+export const ReviewList: React.FC<{ reviews: IReview[] }> = ({ reviews }) => (
+  <div>
+    {reviews.map((review: IReview) => (
+      <Review {...review} />
+    ))}
+  </div>
+);

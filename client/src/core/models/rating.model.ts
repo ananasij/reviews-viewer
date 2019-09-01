@@ -1,7 +1,7 @@
 export interface Ratings {
   general: RatingCategory;
   aspects: RatingCategory;
-  traveledWith: RatingCategory;
+  traveledWith?: RatingCategory;
 }
 
 export interface RatingCategory {
