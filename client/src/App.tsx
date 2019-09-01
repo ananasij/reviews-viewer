@@ -1,21 +1,15 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
-import logo from './logo.svg';
 import './App.scss';
+import { ReviewsContainer } from './containers/ReviewsContainer';
+import { RatingsContainer } from './containers/RatingsContainter';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <Button variant="contained" color="primary">
-          Hello World
-        </Button>
-      </header>
+    <div className="App todo">
+      <RatingsContainer/>
+      <ReviewsContainer/>
     </div>
   );
 };

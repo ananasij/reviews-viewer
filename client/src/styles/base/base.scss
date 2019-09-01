@@ -1,0 +1,7 @@
+@import '../config/colors.scss';
+
+.todo {
+  outline-offset: -12px;
+  outline: 3px dashed $c-blue;
+  padding: 2rem;
+}
