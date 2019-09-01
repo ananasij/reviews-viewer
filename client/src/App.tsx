@@ -1,9 +1,8 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 
 import './App.scss';
-import { ReviewsContainer } from './containers/ReviewsContainer';
-import { RatingsContainer } from './containers/RatingsContainter';
+import ReviewsContainer from './containers/ReviewsContainer';
+import RatingsContainer from './containers/RatingsContainter';
 
 const App: React.FC = () => {
   return (

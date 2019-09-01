@@ -1,9 +1,9 @@
-export interface Ratings {
-  general: RatingCategory;
-  aspects: RatingCategory;
-  traveledWith?: RatingCategory;
+export interface IRatings {
+  general: IRatingCategory;
+  aspects: IRatingCategory;
+  traveledWith?: IRatingCategory;
 }
 
-export interface RatingCategory {
-    [key: string]: number;
+export interface IRatingCategory {
+  [key: string]: number;
 }

@@ -1,69 +1,56 @@
 import React, { Component } from 'react';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Paper, Divider } from '@material-ui/core';
-import { RatingCategory } from '../core/models/rating.model';
 
-export class RatingsContainer extends Component {
-  state = {
-    ratings: {
-      general: {
-        general: 9
-      },
-      aspects: {
-        location: 7,
-        service: 0,
-        priceQuality: 6,
-        food: 0,
-        room: 0,
-        childFriendly: 8,
-        interior: 0,
-        size: 0,
-        activities: 0,
-        restaurants: 0,
-        sanitaryState: 0,
-        accessibility: 0,
-        nightlife: 0,
-        culture: 0,
-        surrounding: 0,
-        atmosphere: 0,
-        noviceSkiArea: 0,
-        advancedSkiArea: 0,
-        apresSki: 0,
-        beach: 0,
-        entertainment: 0,
-        environmental: 0,
-        pool: 0,
-        terrace: 0
-      },
-      traveledWith: {
-        family: 6,
-        friends: 8,
-        other: 10,
-        couple: 10,
-        single: 9
-      }
-    }
-  };
+import { IRatingCategory, IRatings } from '../core/models/rating.model';
+import { getRatings } from '../core/store/actions/ratings';
+import { IState } from '../core/store/reducers';
+
+interface RatingContainerProps {
+  loading: boolean;
+  error: any;
+  ratings?: IRatings;
+  getRatings: Function;
+}
+
+class RatingsContainer extends Component<RatingContainerProps> {
+  componentDidMount() {
+    const { getRatings } = this.props;
+
+    setTimeout(getRatings, 1000);
+  }
 
   render() {
-    const aspects = Object.keys(this.state.ratings.aspects).map(key => (
+    const { ratings, loading, error } = this.props;
+
+    if (loading) {
+      return <div>Looooooooading....</div>;
+    }
+
+    if (!ratings) {
+      return <div className="todo">No ratings!</div>;
+    }
+
+    const aspects = Object.keys(ratings.aspects).map(key => (
       <div className="ratings__category">
-          <div>{key}:</div>
-          <div>{(this.state.ratings.aspects as RatingCategory)[key]}</div>
+        <div>{key}:</div>
+        <div>{(ratings.aspects as IRatingCategory)[key]}</div>
       </div>
     ));
 
-    const traveledWith = Object.keys(this.state.ratings.traveledWith).map(
-      key => (
-        <div className="ratings__category">
-            <div>{key}:</div>
-            <div>{(this.state.ratings.traveledWith as RatingCategory)[key]}</div>
-        </div>
-      )
-    );
+    const traveledWith = Object.keys(
+      ratings.traveledWith as IRatingCategory
+    ).map(key => (
+      <div className="ratings__category">
+        <div>{key}:</div>
+        <div>{(ratings.traveledWith as IRatingCategory)[key]}</div>
+      </div>
+    ));
 
     return (
       <Paper className="ratings">
-        <h1>Rating: {this.state.ratings.general.general}</h1>
+        <h1>Rating: {ratings.general.general}</h1>
         <h4>By aspects</h4>
         <div className="ratings__categories">{aspects}</div>
         <Divider variant="fullWidth" />
@@ -73,3 +60,18 @@ export class RatingsContainer extends Component {
     );
   }
 }
+
+const mapStateToProps = (state: IState) => ({
+  loading: state.ratings.loading,
+  error: state.ratings.error,
+  ratings: state.ratings.data
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  getRatings: () => dispatch(getRatings())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RatingsContainer);

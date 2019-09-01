@@ -1,4 +1,4 @@
-import { Ratings } from './rating.model';
+import { IRatings } from './rating.model';
 
 export interface IReview {
   parents: {
@@ -8,7 +8,7 @@ export interface IReview {
   traveledWith: TraveledWith;
   entryDate: number;
   travelDate: number;
-  ratings: Ratings;
+  ratings: IRatings;
   titles: ITranslatedText;
   texts: ITranslatedText;
   user: string;

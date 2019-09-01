@@ -1,7 +1,7 @@
 import React from 'react';
 import { IReview, Locales } from '../core/models/review.model';
 import { Card } from '@material-ui/core';
-import { RatingCategory } from '../core/models/rating.model';
+import { IRatingCategory } from '../core/models/rating.model';
 
 export const Review: React.FC<IReview> = ({
   ratings,
@@ -18,11 +18,11 @@ export const Review: React.FC<IReview> = ({
     </h4>
     <div>
       {Object.keys(ratings.aspects).map(key => {
-        if ((ratings.aspects as RatingCategory)[key] !== 0) {
+        if ((ratings.aspects as IRatingCategory)[key] !== 0) {
           return (
             <div className="ratings__category">
               <div>{key}:</div>
-              <div>{(ratings.aspects as RatingCategory)[key]}</div>
+              <div>{(ratings.aspects as IRatingCategory)[key]}</div>
             </div>
           );
         }
