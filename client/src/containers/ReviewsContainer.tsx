@@ -7,20 +7,23 @@ import { ReviewList } from '../components/ReviewsList';
 import { Pagination } from '../components/Pagination';
 import { IReview } from '../core/models/review.model';
 import { IState } from '../core/store/reducers';
-import { getReviews } from '../core/store/actions/reviews';
+import { getReviews, getReviewsSuccess } from '../core/store/actions/reviews';
+import { getReviewsFromApi } from '../core/services/reviews';
 
 interface ReviewsContainerProps {
   loading: boolean;
   error: any;
   reviews?: IReview[];
   getReviews: Function;
+  getReviewsSuccess: Function;
 }
 
 export class ReviewsContainer extends React.Component<ReviewsContainerProps> {
   componentDidMount() {
-    const { getReviews } = this.props;
+    const { getReviews, getReviewsSuccess } = this.props;
 
-    setTimeout(getReviews, 1000);
+    // setTimeout(getReviews, 1000);
+    getReviewsFromApi().then(reviews => getReviewsSuccess(reviews));
   }
   render() {
     const { reviews, loading, error } = this.props;
@@ -49,9 +52,10 @@ const mapStateToProps = (state: IState) => ({
   reviews: state.reviews.data
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getReviews: () => dispatch(getReviews())
-});
+const mapDispatchToProps = {
+  getReviews,
+  getReviewsSuccess
+};
 
 export default connect(
   mapStateToProps,

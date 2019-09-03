@@ -15,6 +15,11 @@ export interface IReview {
   locale: Locales;
 }
 
+export interface IReviewsResponse {
+  data: IReview[];
+  meta: any; // TODO: pagination data
+}
+
 export interface ITranslatedText {
   [key: string]: string;
 }

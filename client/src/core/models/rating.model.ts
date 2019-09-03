@@ -7,3 +7,7 @@ export interface IRatings {
 export interface IRatingCategory {
   [key: string]: number;
 }
+
+export interface IRatingsResponse {
+  data: IRatings;
+}
