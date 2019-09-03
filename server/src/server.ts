@@ -1,5 +1,6 @@
 import * as Koa from 'koa';
 import * as Router from '@koa/router';
+import * as cors from '@koa/cors';
 import * as logger from 'koa-logger';
 
 import { getReviews } from './services/reviews';
@@ -9,6 +10,7 @@ const app = new Koa();
 const router = new Router();
 
 app.use(logger());
+app.use(cors());
 
 app.use(async (ctx, next) => {
     try {
