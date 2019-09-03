@@ -1,6 +1,6 @@
 import { Reducer, AnyAction } from 'redux';
 import { IRatings } from '../../models/rating.model';
-import { actionTypes } from '../actions/ratings';
+import { ActionTypes } from '../actions/ratings';
 
 export interface IRatingsState {
   loading: boolean;
@@ -16,20 +16,20 @@ const initialState: IRatingsState = {
 
 export const ratings: Reducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
-    case actionTypes.GET_RATINGS:
+    case ActionTypes.GET_RATINGS:
       return {
         ...state,
         loading: true,
         error: null
       };
-    case actionTypes.GET_RATINGS_SUCCESS:
+    case ActionTypes.GET_RATINGS_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
-        data: action.data
+        data: action.payload.ratings
       };
-    case actionTypes.GET_RATINGS_ERROR:
+    case ActionTypes.GET_RATINGS_ERROR:
       return {
         ...state,
         loading: false,

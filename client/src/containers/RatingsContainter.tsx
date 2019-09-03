@@ -1,29 +1,23 @@
 import React, { Component } from 'react';
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Paper, Divider } from '@material-ui/core';
 
 import { IRatingCategory, IRatings } from '../core/models/rating.model';
-import { getRatings, getRatingsSuccess } from '../core/store/actions/ratings';
+import { getRatings } from '../core/store/actions/ratings';
 import { IState } from '../core/store/reducers';
-import { getRatingsFromApi } from '../core/services/ratings';
-import { ratings } from '../core/store/reducers/ratings';
 
 interface RatingContainerProps {
   loading: boolean;
   error: any;
   ratings?: IRatings;
   getRatings: Function;
-  getRatingsSuccess: Function;
 }
 
 class RatingsContainer extends Component<RatingContainerProps> {
   componentDidMount() {
-    const { getRatings, getRatingsSuccess } = this.props;
+    const { getRatings } = this.props;
 
-    // setTimeout(getRatings, 1000);
-
-    getRatingsFromApi().then(ratings => getRatingsSuccess(ratings));
+    getRatings();
   }
 
   render() {
@@ -74,7 +68,6 @@ const mapStateToProps = (state: IState) => ({
 
 const mapDispatchToProps = {
   getRatings,
-  getRatingsSuccess
 };
 
 export default connect(

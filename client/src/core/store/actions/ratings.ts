@@ -1,57 +1,47 @@
+import { Action } from 'redux';
 import { IRatings } from '../../models/rating.model';
 
-export const actionTypes = {
-  GET_RATINGS: 'GET_RATINGS',
-  GET_RATINGS_SUCCESS: 'GET_RATINGS_SUCCESS',
-  GET_RATINGS_ERROR: 'GET_RATINGS_ERROR'
-};
+export enum ActionTypes {
+  GET_RATINGS = 'GET_RATINGS',
+  GET_RATINGS_SUCCESS = 'GET_RATINGS_SUCCESS',
+  GET_RATINGS_ERROR = 'GET_RATINGS_ERROR'
+}
 
-// export const getRatings = () => ({
-//     type: actionTypes.GET_RATINGS
-// });
+export interface GetRatingsAction extends Action {
+  type: ActionTypes.GET_RATINGS;
+}
 
-export const getRatings = () => getRatingsSuccess(dummyRatings);
+export interface GetRatingsSuccessAction extends Action {
+  type: ActionTypes.GET_RATINGS_SUCCESS;
+  payload: {
+    ratings: IRatings;
+  };
+}
 
-export const getRatingsSuccess = (ratings: IRatings) => ({
-    type: actionTypes.GET_RATINGS_SUCCESS,
-    data: ratings
+export interface GetRatingsErrorAction extends Action {
+  type: ActionTypes.GET_RATINGS_ERROR;
+  error: string;
+}
+
+export const getRatings = (): GetRatingsAction => ({
+  type: ActionTypes.GET_RATINGS
 });
 
-const dummyRatings: IRatings = {
-  general: {
-    general: 9
-  },
-  aspects: {
-    location: 7,
-    service: 0,
-    priceQuality: 6,
-    food: 0,
-    room: 0,
-    childFriendly: 8,
-    interior: 0,
-    size: 0,
-    activities: 0,
-    restaurants: 0,
-    sanitaryState: 0,
-    accessibility: 0,
-    nightlife: 0,
-    culture: 0,
-    surrounding: 0,
-    atmosphere: 0,
-    noviceSkiArea: 0,
-    advancedSkiArea: 0,
-    apresSki: 0,
-    beach: 0,
-    entertainment: 0,
-    environmental: 0,
-    pool: 0,
-    terrace: 0
-  },
-  traveledWith: {
-    family: 6,
-    friends: 8,
-    other: 10,
-    couple: 10,
-    single: 9
-  }
-};
+export const getRatingsSuccess = (
+  ratings: IRatings
+): GetRatingsSuccessAction => ({
+  type: ActionTypes.GET_RATINGS_SUCCESS,
+  payload: { ratings }
+});
+
+export const getRatingsError = (
+  error: any // TODO
+): GetRatingsErrorAction => ({
+  type: ActionTypes.GET_RATINGS_ERROR,
+  error
+});
+
+export type RatingsActions =
+  | GetRatingsAction
+  | GetRatingsSuccessAction
+  | GetRatingsErrorAction;
