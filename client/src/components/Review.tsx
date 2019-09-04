@@ -29,10 +29,10 @@ export const Review: React.FC<IReview> = ({
       })}
     </div>
     <p>
-      Review from {new Date(entryDate).toLocaleDateString()} by {user}.
+      Review from {new Date(entryDate).toLocaleDateString('nl')} by {user}.
     </p>
     <p>
-      Traveled {new Date(travelDate).toLocaleDateString()} with {traveledWith}.
+      Traveled {new Date(travelDate).toLocaleDateString('nl')} with {traveledWith}.
     </p>
     <p>{texts[Locales.nl]}</p>
   </Card>

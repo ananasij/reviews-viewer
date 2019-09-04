@@ -5,18 +5,32 @@ import { IReviewsResponse } from '../models/review.model';
 export const reviewsRoute = async (ctx: Context, next: Function) => {
   ctx.status = 200;
   ctx.set('Content-Type', 'application/json');
-  ctx.body = getReviews();
+  ctx.body = getReviews(ctx.query.traveledWith, ctx.query.sortBy);
 };
 
-const getReviews = (limit = 10, offset = 0): IReviewsResponse => {
+const getReviews = (
+  traveledWith = 'ALL',
+  sortBy: SortBy = 'entryDate',
+  limit = 10,
+  offset = 0
+): IReviewsResponse => {
+  const reviewsList =
+    traveledWith === 'ALL'
+      ? reviewsData.slice()
+      : reviewsData.filter(review => review.traveledWith === traveledWith);
+
+  reviewsList.sort((a, b) => (b[sortBy] - a[sortBy]));
+
   return {
-    data: reviewsData.slice(offset * limit, (offset + 1) * limit),
+    data: reviewsList.slice(offset * limit, (offset + 1) * limit),
     meta: {
       pagination: {
         offset,
         limit,
-        total: reviewsData.length
+        total: reviewsList.length
       }
     }
   };
 };
+
+type SortBy = 'entryDate' | 'travelDate';
