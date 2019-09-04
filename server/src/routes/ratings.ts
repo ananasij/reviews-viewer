@@ -1,3 +1,11 @@
+import { Context } from 'koa';
+
+export const ratignsRoute = async (ctx: Context, next: Function) => {
+  ctx.status = 200;
+  ctx.set('Content-Type', 'application/json');
+  ctx.body = getRatings();
+};
+
 export function getRatings(): any {
   return {
     data: {

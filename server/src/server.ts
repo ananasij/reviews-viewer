@@ -3,8 +3,8 @@ import * as Router from '@koa/router';
 import * as cors from '@koa/cors';
 import * as logger from 'koa-logger';
 
-import { getReviews } from './services/reviews';
-import { getRatings } from './services/ratings';
+import { routes } from './routes';
+import { Route } from './types';
 
 const app = new Koa();
 const router = new Router();
@@ -31,17 +31,7 @@ router.get('/', (ctx, next) => {
     ctx.body = 'Hello world!';
 });
 
-router.get('/reviews', (ctx, next) => {
-    ctx.status = 200;
-    ctx.set('Content-Type', 'application/json');
-    ctx.body = getReviews();
-});
-
-router.get('/ratings', (ctx, next) => {
-    ctx.status = 200;
-    ctx.set('Content-Type', 'application/json');
-    ctx.body = getRatings ();
-});
+routes.map((route: Route) => router[route.method](route.path, ...route.actions));
 
 app.use(router.routes());
 app.use(router.allowedMethods());
