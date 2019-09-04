@@ -1,8 +1,15 @@
 import { IReview, IReviewsResponse } from '../models/review.model';
 import { endpoints } from './endpoints';
 
-export async function getReviewsFromApi(): Promise<IReview[]> {
-  const response = await fetch(endpoints.reviews);
+export async function getReviewsFromApi(
+  traveledWith: string,
+  sortBy: string
+): Promise<IReview[]> {
+  const url = new URL(endpoints.reviews);
+  url.searchParams.append('traveledWith', traveledWith);
+  url.searchParams.append('sortBy', sortBy);
+
+  const response = await fetch(String(url));
 
   return parseReviews(await response.json());
 }

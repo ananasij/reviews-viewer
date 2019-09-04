@@ -9,6 +9,7 @@ export enum ActionTypes {
 
 export interface GetReviewsAction extends Action {
   type: ActionTypes.GET_REVIEWS;
+  payload: { traveledWith: string; sortBy: string };
 }
 
 export interface GetReviewsSuccessAction extends Action {
@@ -23,8 +24,12 @@ export interface GetReviewsErrorAction extends Action {
   error: string;
 }
 
-export const getReviews = (): GetReviewsAction => ({
-  type: ActionTypes.GET_REVIEWS
+export const getReviews = (
+  traveledWith: string,
+  sortBy: string
+): GetReviewsAction => ({
+  type: ActionTypes.GET_REVIEWS,
+  payload: { traveledWith, sortBy }
 });
 
 export const getReviewsSuccess = (
@@ -34,9 +39,7 @@ export const getReviewsSuccess = (
   payload: { reviews }
 });
 
-export const getReviewsError = (
-  error: string
-): GetReviewsErrorAction => ({
+export const getReviewsError = (error: string): GetReviewsErrorAction => ({
   type: ActionTypes.GET_REVIEWS_ERROR,
   error
 });

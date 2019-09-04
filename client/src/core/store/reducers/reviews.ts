@@ -14,19 +14,22 @@ const initialState: IReviewsState = {
   data: undefined
 };
 
-export const reviews: Reducer = (state = initialState, action: ReviewsActions) => {
+export const reviews: Reducer<IReviewsState, ReviewsActions> = (
+  state = initialState,
+  action: ReviewsActions
+) => {
   switch (action.type) {
     case ActionTypes.GET_REVIEWS:
       return {
         ...state,
         loading: true,
-        error: null
+        error: undefined
       };
     case ActionTypes.GET_REVIEWS_SUCCESS:
       return {
         ...state,
         loading: false,
-        error: null,
+        error: undefined,
         data: action.payload.reviews
       };
     case ActionTypes.GET_REVIEWS_ERROR:

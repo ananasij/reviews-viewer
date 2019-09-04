@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
 import { Filters } from '../components/Filters';
@@ -8,23 +7,40 @@ import { Pagination } from '../components/Pagination';
 import { IReview } from '../core/models/review.model';
 import { IState } from '../core/store/reducers';
 import { getReviews, getReviewsSuccess } from '../core/store/actions/reviews';
-import { getReviewsFromApi } from '../core/services/reviews';
 
 interface ReviewsContainerProps {
   loading: boolean;
   error: any;
   reviews?: IReview[];
   getReviews: Function;
-  getReviewsSuccess: Function;
 }
 
 export class ReviewsContainer extends React.Component<ReviewsContainerProps> {
-  componentDidMount() {
-    const { getReviews, getReviewsSuccess } = this.props;
+  state = {
+    traveledWith: 'ALL', //TODO: save to enum for all components
+    sortBy: 'entryDate' //TODO: save to enum for all components
+  };
 
-    getReviews();
+  componentDidMount() {
+    this.triggerGetReviews();
   }
+
+  onTraveledWithChange = (value: string) => {
+    this.setState({ traveledWith: value }, this.triggerGetReviews);
+  };
+
+  onSortByChange = (value: string) => {
+    this.setState({ sortBy: value }, this.triggerGetReviews);
+  };
+
+  triggerGetReviews = () => {
+    const { traveledWith, sortBy } = this.state;
+    this.props.getReviews(traveledWith, sortBy);
+  };
+
   render() {
+    const { traveledWith, sortBy } = this.state;
+
     const { reviews, loading, error } = this.props;
 
     if (loading) {
@@ -37,7 +53,12 @@ export class ReviewsContainer extends React.Component<ReviewsContainerProps> {
 
     return (
       <div>
-        <Filters />
+        <Filters
+          traveledWith={traveledWith}
+          onTraveledWithChange={this.onTraveledWithChange}
+          sortBy={sortBy}
+          onSortByChange={this.onSortByChange}
+        />
         <ReviewList reviews={reviews} />
         <Pagination />
       </div>

@@ -3,18 +3,20 @@ import { Observable, of, from } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
 import {
-  ReviewsActions,
   ActionTypes,
   getReviewsSuccess,
-  getReviewsError
+  getReviewsError,
+  GetReviewsAction
 } from '../actions/reviews';
 import { getReviewsFromApi } from '../../services/reviews';
 
-export const getReviewsEpic = (action$: Observable<ReviewsActions>) =>
+export const getReviewsEpic = (action$: Observable<GetReviewsAction>) =>
   action$.pipe(
     ofType(ActionTypes.GET_REVIEWS),
-    switchMap(() =>
-      from(getReviewsFromApi()).pipe(
+    switchMap((action: GetReviewsAction) =>
+      from(
+        getReviewsFromApi(action.payload.traveledWith, action.payload.sortBy)
+      ).pipe(
         map(reviews => getReviewsSuccess(reviews)),
         catchError(error => of(getReviewsError(error)))
       )

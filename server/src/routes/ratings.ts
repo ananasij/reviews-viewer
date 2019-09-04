@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import { IRatingsResponse, IRatingCategory } from '../models/rating.model';
-import { IReview, TraveledWith } from '../models/review.model';
+import { IReview } from '../models/review.model';
 import { reviewsData } from '../server';
 
 export const ratignsRoute = async (ctx: Context, next: Function) => {
