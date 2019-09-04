@@ -1,4 +1,5 @@
 import { Context } from 'koa';
+import { IRatingsResponse } from 'src/models/rating.model';
 
 export const ratignsRoute = async (ctx: Context, next: Function) => {
   ctx.status = 200;
@@ -6,7 +7,7 @@ export const ratignsRoute = async (ctx: Context, next: Function) => {
   ctx.body = getRatings();
 };
 
-export function getRatings(): any {
+export function getRatings(): IRatingsResponse {
   return {
     data: {
       general: {

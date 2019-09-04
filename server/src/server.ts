@@ -7,6 +7,7 @@ import * as path from 'path';
 
 import { routes } from './routes';
 import { Route } from './types';
+import { IReview } from './models/review.model';
 
 const app = new Koa();
 const router = new Router();
@@ -16,7 +17,7 @@ const reviewsDataFile = fs.readFileSync(
   path.join(__dirname, 'data/reviews.json'),
   'utf8'
 );
-export const reviewsData = JSON.parse(reviewsDataFile);
+export const reviewsData: IReview[] = JSON.parse(reviewsDataFile);
 
 app.use(logger());
 app.use(cors());
