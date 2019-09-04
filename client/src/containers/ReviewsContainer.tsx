@@ -22,8 +22,7 @@ export class ReviewsContainer extends React.Component<ReviewsContainerProps> {
   componentDidMount() {
     const { getReviews, getReviewsSuccess } = this.props;
 
-    // setTimeout(getReviews, 1000);
-    getReviewsFromApi().then(reviews => getReviewsSuccess(reviews));
+    getReviews();
   }
   render() {
     const { reviews, loading, error } = this.props;

@@ -1,35 +1,35 @@
-import { Reducer, AnyAction } from 'redux';
-import { actionTypes } from '../actions/reviews';
+import { Reducer } from 'redux';
+import { ActionTypes, ReviewsActions } from '../actions/reviews';
 import { IReview } from '../../models/review.model';
 
 export interface IReviewsState {
   loading: boolean;
-  error: any; // TODO: figure out error types
+  error?: string;
   data?: IReview[];
 }
 
 const initialState: IReviewsState = {
   loading: false,
-  error: null,
+  error: undefined,
   data: undefined
 };
 
-export const reviews: Reducer = (state = initialState, action: AnyAction) => {
+export const reviews: Reducer = (state = initialState, action: ReviewsActions) => {
   switch (action.type) {
-    case actionTypes.GET_REVIEWS:
+    case ActionTypes.GET_REVIEWS:
       return {
         ...state,
         loading: true,
         error: null
       };
-    case actionTypes.GET_REVIEWS_SUCCESS:
+    case ActionTypes.GET_REVIEWS_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
-        data: action.data
+        data: action.payload.reviews
       };
-    case actionTypes.GET_REVIEWS_ERROR:
+    case ActionTypes.GET_REVIEWS_ERROR:
       return {
         ...state,
         loading: false,

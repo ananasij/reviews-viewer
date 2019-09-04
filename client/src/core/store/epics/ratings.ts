@@ -1,6 +1,6 @@
-import { createEpicMiddleware, combineEpics, ofType } from 'redux-observable';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { combineEpics, ofType } from 'redux-observable';
 import { Observable, of, from } from 'rxjs';
+import { map, switchMap, catchError } from 'rxjs/operators';
 
 import {
   RatingsActions,

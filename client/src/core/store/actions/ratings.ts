@@ -35,7 +35,7 @@ export const getRatingsSuccess = (
 });
 
 export const getRatingsError = (
-  error: any // TODO
+  error: string
 ): GetRatingsErrorAction => ({
   type: ActionTypes.GET_RATINGS_ERROR,
   error
