@@ -1,10 +1,24 @@
+# Reviews viewer
+
 This is a test assignment for Node.js and ReactJS.
 
-Mode info to come.
+## How to run
+
+#### Server
+1. Go to `server/` folder
+2. `npm ci` to install dependencies
+3. `npm start` (or `npm run dev:watch` for dev mode)
+4. Server will start on port `8080`
+
+#### Client
+1. Go to `client/` folder
+2. `npm ci` to install dependencies
+3. `npm start` 
+4. App is available at [http://localhost:3000]()
 
 ------------------------
 
-# Assignment
+### Assignment
 This is an assignment that requires performing a set of mathematical average calculations and a web UI for visualisation.
 
 A JSON file that contains a collection of reviews for one single accommodation is provided. It is expected that the calculations be performed on the server side using Node.js.
