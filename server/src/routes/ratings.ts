@@ -1,5 +1,7 @@
 import { Context } from 'koa';
-import { IRatingsResponse } from 'src/models/rating.model';
+import { IRatingsResponse, IRatingCategory } from '../models/rating.model';
+import { IReview } from '../models/review.model';
+import { reviewsData } from '../server';
 
 export const ratignsRoute = async (ctx: Context, next: Function) => {
   ctx.status = 200;
@@ -11,34 +13,9 @@ export function getRatings(): IRatingsResponse {
   return {
     data: {
       general: {
-        general: 8
+        general: getGeneralRating(reviewsData)
       },
-      aspects: {
-        location: 9,
-        service: 0,
-        priceQuality: 9,
-        food: 0,
-        room: 0,
-        childFriendly: 9,
-        interior: 0,
-        size: 0,
-        activities: 0,
-        restaurants: 0,
-        sanitaryState: 0,
-        accessibility: 0,
-        nightlife: 0,
-        culture: 0,
-        surrounding: 0,
-        atmosphere: 0,
-        noviceSkiArea: 0,
-        advancedSkiArea: 0,
-        apresSki: 0,
-        beach: 0,
-        entertainment: 0,
-        environmental: 0,
-        pool: 0,
-        terrace: 0
-      },
+      aspects: getAspectsRating(reviewsData),
       traveledWith: {
         family: 6,
         friends: 8,
@@ -49,3 +26,44 @@ export function getRatings(): IRatingsResponse {
     }
   };
 }
+
+const getGeneralRating = (reviews: IReview[]): number => {
+  const sum: number = reviews.reduce(
+    (sum: number, next: IReview) => sum + next.ratings.general.general,
+    0
+  );
+
+  return roundTo(sum / reviews.length, 0);
+};
+
+const getAspectsRating = (reviews: IReview[]): IRatingCategory => {
+  const aspectsRatingsCounter: IRatingCategory = {};
+  const aspectsRatingsSum: IRatingCategory = {};
+  const aspectsRatingsAverage: IRatingCategory = {};
+
+  for (const review of reviews) {
+    for (const key of Object.keys(review.ratings.aspects)) {
+      if (review.ratings.aspects[key] > 0) {
+        if (aspectsRatingsSum.hasOwnProperty(key)) {
+          aspectsRatingsSum[key] += review.ratings.aspects[key];
+          aspectsRatingsCounter[key] += 1;
+        } else {
+          aspectsRatingsSum[key] = review.ratings.aspects[key];
+          aspectsRatingsCounter[key] = 1;
+        }
+      }
+    }
+  }
+
+  for (const key of Object.keys(aspectsRatingsSum)) {
+    aspectsRatingsAverage[key] = roundTo(
+      aspectsRatingsSum[key] / aspectsRatingsCounter[key],
+      0
+    );
+  }
+
+  return aspectsRatingsAverage;
+};
+
+const roundTo = (number: number, decimals = 2): number =>
+  parseFloat(number.toFixed(2));
