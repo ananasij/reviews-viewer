@@ -35,9 +35,9 @@ export enum Locales {
 }
 
 export enum TraveledWith {
-  'FAMILY' = 'FAMILY',
-  'FRIENDS' = 'FRIENDS',
-  'OTHER' = 'OTHER',
-  'COUPLE' = 'COUPLE',
-  'SINGLE' = 'SINGLE'
+  FAMILY = 'FAMILY',
+  FRIENDS = 'FRIENDS',
+  OTHER = 'OTHER',
+  COUPLE = 'COUPLE',
+  SINGLE = 'SINGLE'
 }

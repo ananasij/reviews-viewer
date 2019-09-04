@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import { IRatingsResponse, IRatingCategory } from '../models/rating.model';
-import { IReview } from '../models/review.model';
+import { IReview, TraveledWith } from '../models/review.model';
 import { reviewsData } from '../server';
 
 export const ratignsRoute = async (ctx: Context, next: Function) => {
@@ -16,13 +16,7 @@ export function getRatings(): IRatingsResponse {
         general: getGeneralRating(reviewsData)
       },
       aspects: getAspectsRating(reviewsData),
-      traveledWith: {
-        family: 6,
-        friends: 8,
-        other: 10,
-        couple: 10,
-        single: 9
-      }
+      traveledWith: getTravelWithRatings(reviewsData)
     }
   };
 }
@@ -37,33 +31,53 @@ const getGeneralRating = (reviews: IReview[]): number => {
 };
 
 const getAspectsRating = (reviews: IReview[]): IRatingCategory => {
-  const aspectsRatingsCounter: IRatingCategory = {};
-  const aspectsRatingsSum: IRatingCategory = {};
-  const aspectsRatingsAverage: IRatingCategory = {};
+  const counters: IRatingCategory = {};
+  const sums: IRatingCategory = {};
+  const averages: IRatingCategory = {};
 
   for (const review of reviews) {
     for (const key of Object.keys(review.ratings.aspects)) {
       if (review.ratings.aspects[key] > 0) {
-        if (aspectsRatingsSum.hasOwnProperty(key)) {
-          aspectsRatingsSum[key] += review.ratings.aspects[key];
-          aspectsRatingsCounter[key] += 1;
+        if (sums.hasOwnProperty(key)) {
+          sums[key] += review.ratings.aspects[key];
+          counters[key] += 1;
         } else {
-          aspectsRatingsSum[key] = review.ratings.aspects[key];
-          aspectsRatingsCounter[key] = 1;
+          sums[key] = review.ratings.aspects[key];
+          counters[key] = 1;
         }
       }
     }
   }
 
-  for (const key of Object.keys(aspectsRatingsSum)) {
-    aspectsRatingsAverage[key] = roundTo(
-      aspectsRatingsSum[key] / aspectsRatingsCounter[key],
-      0
-    );
+  for (const key of Object.keys(sums)) {
+    averages[key] = roundTo(sums[key] / counters[key], 0);
   }
 
-  return aspectsRatingsAverage;
+  return averages;
 };
 
-const roundTo = (number: number, decimals = 2): number =>
-  parseFloat(number.toFixed(2));
+// TODO: merge this two methods into one to avoid code duplication
+const getTravelWithRatings = (reviews: IReview[]): IRatingCategory => {
+  const counters: IRatingCategory = {};
+  const sums: IRatingCategory = {};
+  const averages: IRatingCategory = {};
+
+  for (const review of reviews) {
+    if (sums.hasOwnProperty(review.traveledWith)) {
+      sums[review.traveledWith] += review.ratings.general.general;
+      counters[review.traveledWith] += 1;
+    } else {
+      sums[review.traveledWith] = review.ratings.general.general;
+      counters[review.traveledWith] = 1;
+    }
+  }
+
+  for (const key of Object.keys(sums)) {
+    averages[key] = roundTo(sums[key] / counters[key], 0);
+  }
+
+  return averages;
+};
+
+const roundTo = (number: number, decimals = 0): number =>
+  parseFloat(number.toFixed(decimals));
