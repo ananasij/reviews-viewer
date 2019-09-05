@@ -27,21 +27,14 @@ export const getRatings = (): GetRatingsAction => ({
   type: ActionTypes.GET_RATINGS
 });
 
-export const getRatingsSuccess = (
-  ratings: IRatings
-): GetRatingsSuccessAction => ({
+export const getRatingsSuccess = (ratings: IRatings): GetRatingsSuccessAction => ({
   type: ActionTypes.GET_RATINGS_SUCCESS,
   payload: { ratings }
 });
 
-export const getRatingsError = (
-  error: string
-): GetRatingsErrorAction => ({
+export const getRatingsError = (error: string): GetRatingsErrorAction => ({
   type: ActionTypes.GET_RATINGS_ERROR,
   error
 });
 
-export type RatingsActions =
-  | GetRatingsAction
-  | GetRatingsSuccessAction
-  | GetRatingsErrorAction;
+export type RatingsActions = GetRatingsAction | GetRatingsSuccessAction | GetRatingsErrorAction;

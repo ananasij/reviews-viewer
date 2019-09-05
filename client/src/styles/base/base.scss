@@ -5,3 +5,18 @@
   outline: 3px dashed $c-blue;
   padding: 2rem;
 }
+
+.base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p {
+    color: $c-grey--dark;
+  }
+
+  &__container {
+    padding: 2rem;
+  }
+}

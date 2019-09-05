@@ -4,6 +4,14 @@
 // config
 @import './config/colors.scss';
 
+// mixins
+@import './mixins/stretch.scss';
+
 // components
+@import './components/filters.scss';
+@import './components/loader.scss';
+@import './components/pagination.scss';
+@import './components/rating.scss';
 @import './components/ratings.scss';
 @import './components/review.scss';
+@import './components/reviews.scss';

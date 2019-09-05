@@ -13,15 +13,11 @@ interface FiltersProps {
 }
 
 export class Filters extends React.Component<FiltersProps> {
-  handleFilterChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) => {
+  handleFilterChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     this.props.onTraveledWithChange(event.target.value as string);
   };
 
-  handleSortChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) => {
+  handleSortChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     this.props.onSortByChange(event.target.value as string);
   };
 
@@ -29,38 +25,46 @@ export class Filters extends React.Component<FiltersProps> {
     const { traveledWith, sortBy } = this.props;
 
     return (
-      <form>
-        <FormControl>
-          <InputLabel htmlFor="traveledWith">Filter by</InputLabel>
-          <Select
-            value={traveledWith}
-            onChange={this.handleFilterChange}
-            inputProps={{
-              name: 'traveledWith',
-              id: 'traveledWith'
-            }}
-          >
-            {filteringWithOptions.map(option => (
-              <MenuItem value={option}>{option}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+      <form className="filters">
+        <div className="filters__field-wrapper">
+          <FormControl className="filters__field">
+            <InputLabel htmlFor="traveledWith">Filter by</InputLabel>
+            <Select
+              value={traveledWith}
+              onChange={this.handleFilterChange}
+              inputProps={{
+                name: 'traveledWith',
+                id: 'traveledWith'
+              }}
+            >
+              {filteringWithOptions.map(option => (
+                <MenuItem value={option} key={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
 
-        <FormControl>
-          <InputLabel htmlFor="sortBy">Sort by</InputLabel>
-          <Select
-            value={sortBy}
-            onChange={this.handleSortChange}
-            inputProps={{
-              name: 'sortBy',
-              id: 'sortBy'
-            }}
-          >
-            {sortingOptions.map(option => (
-              <MenuItem value={option}>{option}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <div className="filters__field-wrapper">
+          <FormControl className="filters__field">
+            <InputLabel htmlFor="sortBy">Sort by</InputLabel>
+            <Select
+              value={sortBy}
+              onChange={this.handleSortChange}
+              inputProps={{
+                name: 'sortBy',
+                id: 'sortBy'
+              }}
+            >
+              {sortingOptions.map(option => (
+                <MenuItem value={option} key={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
       </form>
     );
   }

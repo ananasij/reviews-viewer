@@ -1,18 +1,47 @@
+@import '../config/colors.scss';
+
 .ratings {
+  &__container {
+    min-height: 250px;
     padding: 1rem;
+    position: relative;
+  }
 
-    &__categories {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-    }
+  &__title {
+    margin: 0.5em auto 0.5rem;
+    text-align: center;
+  }
 
-    &__category {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 0 2rem .5rem 0;
-        width: 200px;
+  &__subtitle {
+    margin: 0.5em auto 0.2em;
+  }
+
+  &__sections {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  &__section {
+    padding: 1rem;
+    width: 50%;
+
+    &:nth-child(1) {
+      .ratings__categories {
+        border-right: 1px solid $c-grey--light;
+      }
     }
+  }
+
+  &__categories {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  &__category {
+    padding: 0.5rem 2rem 0.5rem 0;
+    width: 220px;
+  }
 }

@@ -1,0 +1,11 @@
+@import '../mixins/stretch.scss';
+@import '../config/colors.scss';
+
+.loader {
+  @include stretch;
+  align-items: center;
+  background-color: transparentize($color: $c-white, $amount: 0.2);
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}

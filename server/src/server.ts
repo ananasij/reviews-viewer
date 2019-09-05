@@ -12,12 +12,13 @@ import { IReview } from './models/review.model';
 const app = new Koa();
 const router = new Router();
 
-// Read data from JSON file
 const reviewsDataFile = fs.readFileSync(
   path.join(__dirname, 'data/reviews.json'),
   'utf8'
 );
-export const reviewsData: IReview[] = JSON.parse(reviewsDataFile);
+export const reviewsData: IReview[] = JSON.parse(reviewsDataFile).filter(
+  (review: IReview) => review.locale === 'nl'
+); // TODO: add localization
 
 app.use(logger());
 app.use(cors());

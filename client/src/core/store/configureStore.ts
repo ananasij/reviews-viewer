@@ -10,14 +10,10 @@ declare global {
 }
 
 export const configureStore = () => {
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const epicMiddleware = createEpicMiddleware();
 
-  const store = createStore(
-    rootReducer,
-    composeEnhancers(applyMiddleware(epicMiddleware))
-  );
+  const store = createStore(rootReducer, composeEnhancers(applyMiddleware(epicMiddleware)));
 
   epicMiddleware.run(rootEpic);
 

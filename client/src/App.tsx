@@ -6,9 +6,11 @@ import RatingsContainer from './containers/RatingsContainter';
 
 const App: React.FC = () => {
   return (
-    <div className="App todo">
-      <RatingsContainer/>
-      <ReviewsContainer/>
+    <div className="App">
+      <div className="base base__container">
+        <RatingsContainer />
+        <ReviewsContainer />
+      </div>
     </div>
   );
 };

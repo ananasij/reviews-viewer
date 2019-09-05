@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { Filters } from '../components/Filters';
@@ -8,6 +8,7 @@ import { IReview } from '../core/models/review.model';
 import { IState } from '../core/store/reducers';
 import { getReviews } from '../core/store/actions/reviews';
 import { PAGE_SIZE } from '../core/constants';
+import { Loader } from '../components/Loader';
 
 interface ReviewsContainerProps {
   loading: boolean;
@@ -23,7 +24,7 @@ export class ReviewsContainer extends React.Component<ReviewsContainerProps> {
   state = {
     traveledWith: 'ALL', //TODO: save to enum for all components
     sortBy: 'entryDate', //TODO: save to enum for all components
-    page: 1,
+    page: 1
   };
 
   componentDidMount() {
@@ -41,7 +42,7 @@ export class ReviewsContainer extends React.Component<ReviewsContainerProps> {
   onPageChange = (value: number) => {
     this.setState({ page: value }, this.triggerGetReviews);
     if (this.container.current) {
-      this.container.current.scrollIntoView({behavior: "smooth"})
+      this.container.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -54,29 +55,29 @@ export class ReviewsContainer extends React.Component<ReviewsContainerProps> {
     const { traveledWith, sortBy, page } = this.state;
     const { reviews, loading, error, totalPages } = this.props;
 
-    const renderedReviews = reviews
-      ? (
-          <>
-            <Filters
-                traveledWith={traveledWith}
-                onTraveledWithChange={this.onTraveledWithChange}
-                sortBy={sortBy}
-                onSortByChange={this.onSortByChange}
-            />
-            <ReviewList reviews={reviews} />
-            <Pagination
-                page={page}
-                totalPages={totalPages}
-                onPageChange={this.onPageChange}
-            />
-          </>
-        )
-      : <div className="todo">No reviews!</div>;
+    const renderedReviews =
+      reviews && reviews.length ? (
+        <>
+          <ReviewList reviews={reviews} />
+          <Pagination page={page} totalPages={totalPages} onPageChange={this.onPageChange} />
+        </>
+      ) : (
+        <div>No reviews found</div>
+      );
 
     return (
       <div ref={this.container}>
-        {loading && (<div>Looooooooading....</div>)}
-        {renderedReviews}
+        <Filters
+          traveledWith={traveledWith}
+          onTraveledWithChange={this.onTraveledWithChange}
+          sortBy={sortBy}
+          onSortByChange={this.onSortByChange}
+        />
+        <div className="reviews">
+          {loading && <Loader loading={loading} />}
+          {renderedReviews}
+        </div>
+        {!!error && <div>{error}</div>}
       </div>
     );
   }
@@ -86,11 +87,11 @@ const mapStateToProps = (state: IState) => ({
   loading: state.reviews.loading,
   error: state.reviews.error,
   reviews: state.reviews.data,
-  totalPages: Math.ceil(state.reviews.total / PAGE_SIZE),
+  totalPages: Math.ceil(state.reviews.total / PAGE_SIZE)
 });
 
 const mapDispatchToProps = {
-  getReviews,
+  getReviews
 };
 
 export default connect(

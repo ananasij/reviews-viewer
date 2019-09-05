@@ -1,37 +1,29 @@
 import React from 'react';
 import { IReview, Locales } from '../core/models/review.model';
-import { Card } from '@material-ui/core';
+import { Card, Chip } from '@material-ui/core';
 import { IRatingCategory } from '../core/models/rating.model';
+import { Rating } from './Rating';
 
-export const Review: React.FC<IReview> = ({
-  ratings,
-  titles,
-  entryDate,
-  user,
-  travelDate,
-  traveledWith,
-  texts
-}) => (
+export const Review: React.FC<IReview> = ({ ratings, titles, entryDate, user, travelDate, traveledWith, texts }) => (
   <Card className="review">
-    <h4>
-      {ratings.general.general}: {titles[Locales.nl]}
-    </h4>
-    <div>
-      {Object.keys(ratings.aspects).map(key => {
-        if ((ratings.aspects as IRatingCategory)[key] !== 0) {
+    <h3>
+      <Chip label={ratings.general.general} color="primary" /> {titles[Locales.nl]}
+    </h3>
+    <div className="ratings__categories">
+      {Object.keys(ratings.aspects)
+        .filter(key => (ratings.aspects as IRatingCategory)[key] !== 0)
+        .map(key => {
           return (
-            <div className="ratings__category">
-              <div>{key}:</div>
-              <div>{(ratings.aspects as IRatingCategory)[key]}</div>
+            <div className="ratings__category" key={key}>
+              <Rating name={key} value={(ratings.aspects as IRatingCategory)[key]} />
             </div>
           );
-        }
-      })}
+        })}
     </div>
-    <p>
+    <p className="review__info">
       Review from {new Date(entryDate).toLocaleDateString('nl')} by {user}.
     </p>
-    <p>
+    <p className="review__info">
       Traveled {new Date(travelDate).toLocaleDateString('nl')} with {traveledWith}.
     </p>
     <p>{texts[Locales.nl]}</p>

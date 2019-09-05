@@ -13,13 +13,10 @@ const initialState: IReviewsState = {
   loading: false,
   error: undefined,
   data: undefined,
-  total: 0,
+  total: 0
 };
 
-export const reviews: Reducer<IReviewsState, ReviewsActions> = (
-  state = initialState,
-  action: ReviewsActions
-) => {
+export const reviews: Reducer<IReviewsState, ReviewsActions> = (state = initialState, action: ReviewsActions) => {
   switch (action.type) {
     case ActionTypes.GET_REVIEWS:
       return {
@@ -33,7 +30,7 @@ export const reviews: Reducer<IReviewsState, ReviewsActions> = (
         loading: false,
         error: undefined,
         data: action.payload.reviews,
-        total: action.payload.total,
+        total: action.payload.total
       };
     case ActionTypes.GET_REVIEWS_ERROR:
       return {

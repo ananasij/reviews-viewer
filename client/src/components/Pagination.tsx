@@ -1,32 +1,43 @@
 import React, { FC } from 'react';
 import { PageLink } from './PageLink';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import LastPageIcon from '@material-ui/icons/LastPage';
+import NavigateBefore from '@material-ui/icons/NavigateBefore';
+import NavigateNext from '@material-ui/icons/NavigateNext';
 
 interface PaginationProps {
-  page: number,
-  totalPages: number,
-  onPageChange: (value: number) => any,
+  page: number;
+  totalPages: number;
+  onPageChange: (value: number) => any;
 }
 
-export const Pagination: FC<PaginationProps> = ({page, totalPages, onPageChange}) => {
+export const Pagination: FC<PaginationProps> = ({ page, totalPages, onPageChange }) => {
   if (totalPages <= 1) {
     return null;
   }
 
+  const backDisabled = page <= 1;
+  const nextDisabled = page >= totalPages;
+
   return (
-    <div className="todo">
-      {(page > 1) && (
-        <>
-          <PageLink page={1} onPageChange={onPageChange}>&lt;&lt;</PageLink>
-          <PageLink page={page - 1} onPageChange={onPageChange}>&lt;</PageLink>
-        </>
-      )}
-      <span>{page}/{totalPages}</span>
-      {(page < totalPages) && (
-        <>
-          <PageLink page={page + 1} onPageChange={onPageChange}>&gt;</PageLink>
-          <PageLink page={totalPages} onPageChange={onPageChange}>&gt;&gt;</PageLink>
-        </>
-      )}
+    <div className="pagination">
+      <PageLink disabled={backDisabled} page={1} onPageChange={onPageChange}>
+        <FirstPageIcon color={backDisabled ? 'disabled' : 'primary'} />
+      </PageLink>
+      <PageLink disabled={backDisabled} page={page - 1} onPageChange={onPageChange}>
+        <NavigateBefore color={backDisabled ? 'disabled' : 'primary'} />
+      </PageLink>
+
+      <div className="pagination__counter">
+        {page}/{totalPages}
+      </div>
+
+      <PageLink disabled={nextDisabled} page={page + 1} onPageChange={onPageChange}>
+        <NavigateNext color={nextDisabled ? 'disabled' : 'primary'} />
+      </PageLink>
+      <PageLink disabled={nextDisabled} page={totalPages} onPageChange={onPageChange}>
+        <LastPageIcon color={nextDisabled ? 'disabled' : 'primary'} />
+      </PageLink>
     </div>
   );
 };
