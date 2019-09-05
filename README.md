@@ -1,6 +1,20 @@
 # Reviews viewer
 
-This is a test assignment for Node.js and ReactJS.
+This is a test project for Node.js and ReactJS.
+
+#### Tech buzzwords
+- ReactJS and Typescript for client-side components
+- Redux for state management and Redux-observable for side-effects
+- Material-UI and SCSS for styles
+- Koa.js + Typescript for server
+- Jest for some server-side tests
+
+#### Improvements plan
+- Add localization (now only Dutch reviews are displayed)
+- Add MongoDB to store data
+- Try Worker Threads for server-side calculations
+- Switch styles to CSS-in-JS
+
 
 ## How to run
 
