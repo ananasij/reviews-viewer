@@ -6,12 +6,14 @@ export interface IReviewsState {
   loading: boolean;
   error?: string;
   data?: IReview[];
+  total: number;
 }
 
 const initialState: IReviewsState = {
   loading: false,
   error: undefined,
-  data: undefined
+  data: undefined,
+  total: 0,
 };
 
 export const reviews: Reducer<IReviewsState, ReviewsActions> = (
@@ -30,7 +32,8 @@ export const reviews: Reducer<IReviewsState, ReviewsActions> = (
         ...state,
         loading: false,
         error: undefined,
-        data: action.payload.reviews
+        data: action.payload.reviews,
+        total: action.payload.total,
       };
     case ActionTypes.GET_REVIEWS_ERROR:
       return {

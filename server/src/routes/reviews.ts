@@ -3,9 +3,11 @@ import { reviewsData } from '../server';
 import { IReviewsResponse } from '../models/review.model';
 
 export const reviewsRoute = async (ctx: Context, next: Function) => {
+  const { traveledWith, sortBy, offset, limit } = ctx.query;
+
   ctx.status = 200;
   ctx.set('Content-Type', 'application/json');
-  ctx.body = getReviews(ctx.query.traveledWith, ctx.query.sortBy);
+  ctx.body = getReviews(traveledWith, sortBy, parseInt(limit, 10), parseInt(offset, 10));
 };
 
 const getReviews = (
@@ -19,10 +21,10 @@ const getReviews = (
       ? reviewsData.slice()
       : reviewsData.filter(review => review.traveledWith === traveledWith);
 
-  reviewsList.sort((a, b) => (b[sortBy] - a[sortBy]));
+  reviewsList.sort((a, b) => b[sortBy] - a[sortBy]);
 
   return {
-    data: reviewsList.slice(offset * limit, (offset + 1) * limit),
+    data: reviewsList.slice(offset, offset + limit),
     meta: {
       pagination: {
         offset,

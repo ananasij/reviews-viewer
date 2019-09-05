@@ -15,9 +15,17 @@ export interface IReview {
   locale: Locales;
 }
 
+interface Pagination {
+  limit: number;
+  offset: number;
+  total: number;
+}
+
 export interface IReviewsResponse {
   data: IReview[];
-  meta: any; // TODO: pagination data
+  meta: {
+    pagination: Pagination,
+  };
 }
 
 export interface ITranslatedText {

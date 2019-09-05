@@ -15,9 +15,13 @@ export const getReviewsEpic = (action$: Observable<GetReviewsAction>) =>
     ofType(ActionTypes.GET_REVIEWS),
     switchMap((action: GetReviewsAction) =>
       from(
-        getReviewsFromApi(action.payload.traveledWith, action.payload.sortBy)
+        getReviewsFromApi(
+          action.payload.traveledWith,
+          action.payload.sortBy,
+          action.payload.page,
+        )
       ).pipe(
-        map(reviews => getReviewsSuccess(reviews)),
+        map(({ reviews, total }) => getReviewsSuccess(reviews, total)),
         catchError(error => of(getReviewsError(error)))
       )
     )
