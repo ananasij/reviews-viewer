@@ -7,6 +7,7 @@ import { getRatings } from '../core/store/actions/ratings';
 import { IState } from '../core/store/reducers';
 import { Loader } from '../components/Loader';
 import { Rating } from '../components/Rating';
+import { TRAVELED_WITH_LABELS, ASPECTS_LABELS } from '../core/constants';
 
 interface RatingContainerProps {
   loading: boolean;
@@ -39,7 +40,7 @@ class RatingsContainer extends Component<RatingContainerProps> {
             <div className="ratings__categories">
               {Object.keys(ratings.aspects).map(key => (
                 <div className="ratings__category" key={key}>
-                  <Rating name={key} value={(ratings.aspects as IRatingCategory)[key]} />
+                  <Rating name={ASPECTS_LABELS[key]} value={(ratings.aspects as IRatingCategory)[key]} />
                 </div>
               ))}
             </div>
@@ -50,7 +51,7 @@ class RatingsContainer extends Component<RatingContainerProps> {
             <div className="ratings__categories">
               {Object.keys(ratings.traveledWith as IRatingCategory).map(key => (
                 <div className="ratings__category" key={key}>
-                  <Rating name={key} value={(ratings.traveledWith as IRatingCategory)[key]} />
+                  <Rating name={TRAVELED_WITH_LABELS[key]} value={(ratings.traveledWith as IRatingCategory)[key]} />
                 </div>
               ))}
             </div>

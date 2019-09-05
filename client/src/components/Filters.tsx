@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { TraveledWith } from '../core/models/review.model';
+import { ORDER_BY_LABELS, FILTER_LABELS } from '../core/constants';
 
 const filteringWithOptions = ['ALL'].concat(Object.keys(TraveledWith));
 const sortingOptions = ['entryDate', 'travelDate'];
@@ -39,7 +40,7 @@ export class Filters extends React.Component<FiltersProps> {
             >
               {filteringWithOptions.map(option => (
                 <MenuItem value={option} key={option}>
-                  {option}
+                  {FILTER_LABELS[option]}
                 </MenuItem>
               ))}
             </Select>
@@ -59,7 +60,7 @@ export class Filters extends React.Component<FiltersProps> {
             >
               {sortingOptions.map(option => (
                 <MenuItem value={option} key={option}>
-                  {option}
+                  {ORDER_BY_LABELS[option]}
                 </MenuItem>
               ))}
             </Select>

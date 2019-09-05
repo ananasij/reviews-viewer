@@ -3,6 +3,7 @@ import { IReview, Locales } from '../core/models/review.model';
 import { Card, Chip } from '@material-ui/core';
 import { IRatingCategory } from '../core/models/rating.model';
 import { Rating } from './Rating';
+import { TRAVELED_WITH_LABELS, ASPECTS_LABELS } from '../core/constants';
 
 export const Review: React.FC<IReview> = ({ ratings, titles, entryDate, user, travelDate, traveledWith, texts }) => (
   <Card className="review">
@@ -15,7 +16,7 @@ export const Review: React.FC<IReview> = ({ ratings, titles, entryDate, user, tr
         .map(key => {
           return (
             <div className="ratings__category" key={key}>
-              <Rating name={key} value={(ratings.aspects as IRatingCategory)[key]} />
+              <Rating name={ASPECTS_LABELS[key]} value={(ratings.aspects as IRatingCategory)[key]} />
             </div>
           );
         })}
@@ -24,7 +25,7 @@ export const Review: React.FC<IReview> = ({ ratings, titles, entryDate, user, tr
       Review from {new Date(entryDate).toLocaleDateString('nl')} by {user}.
     </p>
     <p className="review__info">
-      Traveled {new Date(travelDate).toLocaleDateString('nl')} with {traveledWith}.
+      Traveled {new Date(travelDate).toLocaleDateString('nl')} {TRAVELED_WITH_LABELS[traveledWith]}.
     </p>
     <p>{texts[Locales.nl]}</p>
   </Card>
