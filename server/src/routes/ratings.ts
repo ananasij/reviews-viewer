@@ -12,19 +12,15 @@ export const ratignsRoute = async (ctx: Context, next: Function) => {
 };
 
 export function getRatings(): IRatingsResponse {
+  const currentYear: number = new Date().getFullYear();
+
   return {
     data: {
       general: {
-        general: getGeneralRating(reviewsData)
+        general: getGeneralRating(reviewsData, currentYear)
       },
-      aspects: getAspectsRating(reviewsData),
-      traveledWith: getTraveledWithRatings(reviewsData)
+      aspects: getAspectsRating(reviewsData, currentYear),
+      traveledWith: getTraveledWithRatings(reviewsData, currentYear)
     }
   };
 }
-
-
-
-
-
-
